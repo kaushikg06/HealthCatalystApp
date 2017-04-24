@@ -1,0 +1,74 @@
+﻿@model IEnumerable<HealthCatalystApp.Models.People>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class="btn btn-warning" })
+</p>
+<table id="people_table" class="table">
+    <thead>
+    <tr>
+        <th>
+            <span class="glyphicon glyphicon-picture"></span>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.first_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.last_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.website)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.interests)
+        </th>
+        <th></th>
+    </tr>
+        </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <img src="@Html.DisplayFor(modelItem => item.photo_path)" alt="person_img" class="img-thumbnail img-responsive person-img" /> 
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.first_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.last_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.website)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.interests)
+        </td>
+        <td>
+            <ul class="list-unstyled">
+                <li>@Html.ActionLink("Edit", "Edit", new { id = item.person_id}, new { @class = "btn btn-primary" })</li>
+                <li>@Html.ActionLink("Details", "Details", new { id = item.person_id }, new {@class = "btn btn-success"})</li>
+                <li>@Html.ActionLink("Delete", "Delete", new { id = item.person_id }, new { @class = "btn btn-danger" })</li>
+            </ul>
+        </td>
+    </tr>
+}
+        </tbody>
+</table>

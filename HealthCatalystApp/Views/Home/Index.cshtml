@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "People Search";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div id="search_container">
+            <h1 class="search-title"><span class="glyphicon glyphicon-user"></span>   Health Catalyst People Search</h1>
+            <div class="input-group stylish-input-group">
+                <input id="search_text" type="text" class="form-control">
+                <button id="search_btn" type="button">
+                    <span class="glyphicon glyphicon-search"></span> Search
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div id="result_container">
+            <hr />
+            <div id="search_results" class="list-group">
+                <h5><em>Use the search bar to find people (For example: kaushik)</em></h5>
+            </div>
+            <span id="loader" class="loading collapse"><img src="/Content/img/ajax-loader.gif" /></span>
+
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+    $("#search_btn").click(function () {
+        var searchtext = $('#search_text').val();
+        
+        $("#loader").show();
+        $("#search_results").empty();
+        var actionUrl = '/Home/SearchResults/' + searchtext;
+        console.log(actionUrl);
+        $.getJSON(actionUrl, displayData).always(function () { $("#loader").hide(); });
+    });
+
+    $("#search_text").focus();
+
+    function displayData(response) {
+        if (response != null) {
+            for (var i = 0; i < response.length; i++) {
+                var listitem = '<div class="col-lg-2"><img src="' + response[i].photo_path + '" class="img-thumbnail img-responsive search-img" /></div><div href="#" class="list-group-item list-group-item-action col-lg-10"><h4 class="list-group-item-heading">  Name: ' + response[i].first_name + ' ' + response[i].last_name + '</h4><p class="list-group-item-text"><span class="glyphicon glyphicon-envelope list-group-glyph"></span>  Email: ' + response[i].email + '</p><p class="list-group-item-text"><span class="glyphicon glyphicon-phone-alt"></span>   Phone: ' + response[i].phone + '</p><p class="list-group-item-text"><span class="glyphicon glyphicon-map-marker"></span>  Address: ' + response[i].address + ' ' + response[i].city + ', ' + response[i].state + ' ' + response[i].zip + '</p><p class="list-group-item-text"><span class="glyphicon glyphicon-star"></span>  Interests: ' + response[i].interests + '</p><p class="list-group-item-text"><span class="glyphicon glyphicon-calendar"></span>  Age:' + response[i].age + '</p></div>';
+                $("#search_results").append(listitem);
+            }
+        }
+
+    }
+
+    $("#search_text").keyup(function (event) {
+        if (event.keyCode == 13) {
+            $("#search_btn").click();
+        }
+    });
+
+
+</script>
